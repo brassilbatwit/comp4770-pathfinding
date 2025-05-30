@@ -70,11 +70,13 @@ public class SimplePathfinder : MonoBehaviour
     {
         Stack<PathNode> stack = new Stack<PathNode>();
         HashSet<Tile> visited = new HashSet<Tile>();
+		int nodeCount = 0;
 
-        stack.Push(new PathNode(start, null));
+		stack.Push(new PathNode(start, null));
 
         while (stack.Count > 0)
         {
+            ++nodeCount;
             var current = stack.Pop();
             if (visited.Contains(current.tile)) continue;
 
@@ -82,7 +84,8 @@ public class SimplePathfinder : MonoBehaviour
             if (current.tile == goal)
             {
                 ShowPath(ReconstructPath(current));
-                return;
+				Debug.Log($"Nodes visited w/ DFS: {nodeCount}");
+				return;
             }
 
             foreach (var neighbor in GetNeighbors(current.tile))
@@ -99,11 +102,13 @@ public class SimplePathfinder : MonoBehaviour
     {
         Queue<PathNode> queue = new Queue<PathNode>();
         HashSet<Tile> visited = new HashSet<Tile>();
+        int nodeCount = 0;
 
         queue.Enqueue(new PathNode(start, null));
 
         while (queue.Count > 0)
         {
+            ++nodeCount;
             var current = queue.Dequeue();
             if (visited.Contains(current.tile)) continue;
 
@@ -111,7 +116,8 @@ public class SimplePathfinder : MonoBehaviour
             if (current.tile == goal)
             {
                 ShowPath(ReconstructPath(current));
-                return;
+				Debug.Log($"Nodes visited w/ BFS: {nodeCount}");
+				return;
             }
 
             foreach (var neighbor in GetNeighbors(current.tile))
@@ -122,20 +128,23 @@ public class SimplePathfinder : MonoBehaviour
         }
 
         Debug.LogWarning("BFS: No path found.");
-    }
+	}
 
     private void RunDijkstra(Tile start, Tile goal)
     {
         List<PathNode> open = new List<PathNode> { new PathNode(start, null, 0f) };
         HashSet<Tile> closed = new HashSet<Tile>();
+        int nodeCount = 0;
 
         while (open.Count > 0)
         {
+            ++nodeCount;
             var current = open.OrderBy(n => n.gCost).First();
             if (current.tile == goal)
             {
                 ShowPath(ReconstructPath(current));
-                return;
+				Debug.Log($"Nodes visited w/ Dijkstra: {nodeCount}");
+				return;
             }
 
             open.Remove(current);
@@ -159,20 +168,23 @@ public class SimplePathfinder : MonoBehaviour
         }
 
         Debug.LogWarning("Dijkstra: No path found.");
-    }
+	}
 
     private void RunAStar(Tile start, Tile goal)
     {
         List<PathNode> open = new List<PathNode> { new PathNode(start, null, 0f, Heuristic(start, goal)) };
         HashSet<Tile> closed = new HashSet<Tile>();
+        int nodeCount = 0;
 
         while (open.Count > 0)
         {
+            ++nodeCount;
             var current = open.OrderBy(n => n.FCost).First();
             if (current.tile == goal)
             {
                 ShowPath(ReconstructPath(current));
-                return;
+				Debug.Log($"Nodes visited w/ A*: {nodeCount}");
+				return;
             }
 
             open.Remove(current);
@@ -197,7 +209,7 @@ public class SimplePathfinder : MonoBehaviour
         }
 
         Debug.LogWarning("A*: No path found.");
-    }
+	}
 
     private List<Tile> ReconstructPath(PathNode node)
     {
