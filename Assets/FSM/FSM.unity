@@ -1254,6 +1254,12 @@ MonoBehaviour:
   - {fileID: 768254833}
   player: {fileID: 1405793670}
   chaseRange: 5
+  fleeRange: 7.5
+  maxHealth: 10
+  health: 10
+  patrolMaterial: {fileID: 2100000, guid: ab432d164f1e1a142add0b168d12b9bf, type: 2}
+  chaseMaterial: {fileID: 2100000, guid: 02f6298e94a0eac428e1870b52af2351, type: 2}
+  fleeMaterial: {fileID: 2100000, guid: 669a0af4f8983e14b82e745ba4df8a3f, type: 2}
 --- !u!195 &1543240882
 NavMeshAgent:
   m_ObjectHideFlags: 0
