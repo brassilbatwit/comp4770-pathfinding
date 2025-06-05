@@ -27,7 +27,12 @@ public class PatrolState : IState
         float distToPlayer = Vector3.Distance(ai.transform.position, ai.player.position);
         if (distToPlayer < ai.chaseRange)
         {
-            ai.TransitionToState(ai.chaseState);
+            if (ai.HasLowHealth) {
+                ai.TransitionToState(ai.fleeState);
+            }
+            else {
+                ai.TransitionToState(ai.chaseState);
+            }
             return;
         }
 

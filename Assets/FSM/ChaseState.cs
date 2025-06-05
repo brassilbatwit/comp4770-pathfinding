@@ -26,10 +26,16 @@ public class ChaseState : IState
     {
         float dist = Vector3.Distance(ai.transform.position, player.position);
 
-        if (dist > chaseRange * 1.2f)
-        {
-            ai.TransitionToState(ai.patrolState);
+        if (ai.HasLowHealth) {
+            ai.TransitionToState(ai.fleeState);
             return;
+        }
+        else {
+            if (dist > chaseRange * 1.2f)
+            {
+                ai.TransitionToState(ai.patrolState);
+                return;
+            }
         }
 
         agent.SetDestination(player.position);
